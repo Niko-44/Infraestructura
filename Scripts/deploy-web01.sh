@@ -33,6 +33,29 @@ server {
 }
 EOF
 
+cat <<EOF >/etc/nginx/sites-enabled/default
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html/wordpress;
+
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+               include snippets/fastcgi-php.conf;
+
+               fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+        }
+}
+EOF
+
 systemctl restart nginx
 
 wget https://wordpress.org/latest.zip -O /tmp/worldpress-6-6-2.zip
