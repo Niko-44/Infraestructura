@@ -48,7 +48,6 @@ read only = no
 path = /srv/fileserver/instaladores/
 read only = no
 
-
 EOF
 
 net ads join -U administrator%$ADMINPASSWORD
